@@ -61,7 +61,7 @@ app.get("/", (req, res) => {
     endpoint: {
       tasks: "GET, POST, PUT, DELETE /api/tasks",
     },
-    documentation: "To be added soon!",
+    documentation: "https://taskflow-api-9f90.onrender.com/api-docs/",
     author: "Mohammed Mango",
   });
 });
