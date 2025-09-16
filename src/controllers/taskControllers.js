@@ -55,7 +55,7 @@ const getTaskById = async (req, res) => {
 // CREATE: Add a new task
 const createTask = async (req, res) => {
   try {
-    const { title, description = "" } = req.body;
+    const { title, description = "", completed = false } = req.body;
 
     const task = new Task({
       title,
