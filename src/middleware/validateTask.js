@@ -35,6 +35,8 @@ const validateUpdateTask = [
     .optional()
     .trim()
     .isString()
+    .withMessage("Title must be a string")
+    .isLength({ max: 100 })
     .withMessage("Title must be at most 100 characters"),
   body("description")
     .optional()
@@ -50,7 +52,7 @@ const validateUpdateTask = [
 // Middleware to check validation results
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty) {
+  if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
       message: "Validation Error",

@@ -86,11 +86,13 @@ const updateTask = async (req, res) => {
     const { id } = req.params; // added
     const updateFields = req.body; // added
 
-    const updatedTask = await Task.findByIdAndUpdate(
-      id,
-      { $set: updateFields },
-      { new: true, runValidators: true } // Return updated doc + validate
-    );
+    const task = await Task.findById(id);
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
 
     if (task.user.toString() !== req.user._id.toString()) {
       return res.status(401).json({
@@ -98,6 +100,9 @@ const updateTask = async (req, res) => {
         message: "Not authorized to update this task",
       });
     }
+
+    Object.assign(task, updateFields);
+    const updatedTask = await task.save();
 
     res.status(200).json({
       success: true,
